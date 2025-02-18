@@ -1,3 +1,18 @@
+// import { initializeApp } from "firebase/app";
+// import {
+//   getAuth,
+//   GoogleAuthProvider,
+//   signInWithPopup,
+//   signOut,
+// } from "firebase/auth";
+
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth(app);
+// const provider = new GoogleAuthProvider();
+
+// export { auth, provider, signInWithPopup, signOut };
+
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -6,6 +21,7 @@ import {
   signOut,
 } from "firebase/auth";
 
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAxFyWNOmh7Fpigz3wbbUbHwWHRdELXzNE",
   authDomain: "chatgpt-b45c9.firebaseapp.com",
@@ -21,4 +37,21 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-export { auth, provider, signInWithPopup, signOut };
+// Functions for authentication
+const signInWithGoogle = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (error) {
+    console.error("Google sign-in error:", error);
+  }
+};
+
+const logout = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+};
+
+export { auth, signInWithGoogle, logout };

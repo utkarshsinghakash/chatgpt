@@ -1,77 +1,64 @@
-import { FaBriefcase, FaLightbulb } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
-import { useState, useEffect } from "react";
-import { IoMenu, IoClose } from "react-icons/io5"; // Icons for menu toggle
+import React, { useState } from "react";
+import { FaBriefcase, FaLightbulb, FaBars, FaTimes } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isOpen && !event.target.closest(".sidebar-container")) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [isOpen]);
-
   return (
-    <>
-      {/* Sidebar Toggle for Mobile */}
+    <div>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-opacity-50 z-40 md:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+
       <button
-        className="p-3 fixed top-2 left-2 bg-transparent text-black rounded-md md:hidden"
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent immediate closing
-          setIsOpen(true);
-        }}
+        className="p-3 text-gray-900 bg-white shadow-md fixed top-4 left-4 rounded-md md:hidden z-50"
+        onClick={() => setIsOpen(!isOpen)}
       >
-        <IoMenu size={24} />
+        {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
 
-      {/* Sidebar Container */}
       <div
-        className={`sidebar-container fixed md:relative top-0 left-0 h-full bg-blue-100 p-4 flex flex-col gap-4 w-64 md:w-1/4 transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        }`}
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+        className={`fixed top-0 left-0 h-full bg-blue-100 p-5 flex flex-col shadow-lg transition-transform duration-300 ease-in-out z-50
+        ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 md:relative md:w-72`}
       >
-        {/* Close Button (Visible Only on Mobile) */}
         <button
-          className="self-end text-black md:hidden"
+          className="absolute top-4 right-4 md:hidden p-2 text-gray-900"
           onClick={() => setIsOpen(false)}
         >
-          <IoClose size={24} />
+          <FaTimes size={24} />
         </button>
 
-        <h1 className="text-xl font-bold text-center">XZAYOGN</h1>
+        <h1 className="text-xl font-bold text-gray-900">XZAYOGN</h1>
 
-        <button className="flex items-center gap-2 bg-white p-2 rounded-lg shadow">
-          <FaLightbulb className="text-pink-500" />
-          Upcoming
-        </button>
+        <div className="mt-5 space-y-3">
+          <button className="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-md hover:bg-gray-200">
+            <FaLightbulb className="text-pink-500" />
+            <span>Upcoming</span>
+          </button>
 
-        <button className="flex items-center gap-2 bg-white p-2 rounded-lg shadow">
-          <IoMdAdd className="text-gray-700" />
-          New Chat
-        </button>
+          <button className="flex items-center space-x-2 bg-white p-3 rounded-lg shadow-md hover:bg-gray-200">
+            <span className="text-lg font-bold">+</span>
+            <span>New Chat</span>
+          </button>
 
-        <button className="flex items-center gap-2 bg-blue-500 text-white p-2 rounded-lg shadow">
-          <FaBriefcase />
-          My Jobs
-        </button>
-
-        <div className="mt-4">
-          <p className="font-semibold">Today</p>
-          <button className="w-full text-left text-blue-600">
-            Career switch advice?
+          <button className="flex items-center space-x-2 bg-blue-500 text-white p-3 rounded-lg shadow-md hover:bg-blue-600">
+            <FaBriefcase />
+            <span>My Jobs</span>
           </button>
         </div>
 
-        <div className="mt-4">
-          <p className="font-semibold">Chat History</p>
+        <div className="mt-8">
+          <h2 className="text-gray-700 font-semibold">Today</h2>
+          <p className="text-gray-900 mt-2 bg-white p-2 rounded-lg shadow-md">
+            Career switch advice?
+          </p>
+
+          <h2 className="text-gray-700 font-semibold mt-4">Chat history</h2>
           {[
             "How to improve LinkedIn?",
             "Common interview Qs?",
@@ -79,16 +66,16 @@ const Sidebar = () => {
             "Resume optimization?",
             "Career in Digital Marketing?",
           ].map((item, index) => (
-            <button
+            <p
               key={index}
-              className="block w-full text-left text-blue-600 py-1"
+              className="text-gray-900 mt-2 bg-white p-2 rounded-lg shadow-md cursor-pointer hover:bg-gray-200"
             >
               {item}
-            </button>
+            </p>
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

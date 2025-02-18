@@ -1,14 +1,17 @@
+import React from "react";
 import Sidebar from "./components/Sidebar";
-import ChatSection from "./components/ChatSection";
-import Header from "./components/Header";
+import Chat from "./components/Chat";
 
-function App() {
+const App = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-100">
       <Sidebar />
-      <ChatSection />
+
+      <div className="flex-1 flex flex-col items-center  bg-white p-2">
+        <Chat />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
